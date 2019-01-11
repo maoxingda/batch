@@ -1,149 +1,107 @@
 @echo off
 
 
+set sf=春节活动
+set vd=情人节活动
+set main_key=HKEY_CURRENT_USER\uitest
+REM 活动类型
+set sub_key_act_type=act_type
+REM 活动阶段
+set sub_key_act_part=act_part
+
 :main
-	REM 主菜单选择
-	set mmsel=0
-	
-	REM 子菜单选择
-	set smsel=0
-	
 	call :main_menu
 	
-	if %mmsel% == 3 (
-		call :cleanup
-		goto :eof
-	) else (
-		cls && call :main_menu
-	)
+	call :cleanup [-%main_key%]
+	
+	goto :eof
 
 :main_menu
-	echo.
-	echo    --------------------------------
-	echo    -  (1)	春节活动
-	echo    -  (2)	情人节活动
-	echo    -  (3)	退出
-	echo    --------------------------------
-	echo.
-	
-	choice -cs -n -c 123 -m "please select:"
-	
-	set mmsel=%errorlevel%
+	cls
+	echo +主菜单
+	echo     -(1) %sf%
+	echo     -(2) %vd%
+	echo     -(3) 退出
 
-	if %mmsel% == 1 call :sf && cls && call :sub_menu
-	if %mmsel% == 2 call :vd && cls && call :sub_menu
+	choice -cs -n -c 123 -m "select:"
 	
-	exit /b 0
+	if %errorlevel% == 1 (
 	
-:sub_menu
-	echo.
-	echo    --------------------------------
-	echo    -  (1)	第一阶段
-	echo    -  (2)	第二阶段
-	echo    -  (3)	第三阶段
-	echo    -  (4)	返回上层菜单
-	echo    --------------------------------
-	echo.
-
-	choice -cs -n -c 1234 -m "please select:"
-
-	set smsel=%errorlevel%
-	
-	if %smsel% == 4 (
-		cls && call :main_menu
-	) else (
-		if %smsel% == 1 call :part1
-		if %smsel% == 2 call :part2
-		if %smsel% == 3 call :part3
+		call :key_value [%main_key%] %sub_key_act_type% 1 1
+		call :sub_menu %sf%
 		
-		cls && call :sub_menu
+	) else if %errorlevel% == 2 (
+	
+		call :key_value [%main_key%] %sub_key_act_type% 2 1
+		call :sub_menu %vd%
 	)
 	
-	exit /b 0
+	exit /b %errorlevel%
+	
+:sub_menu
+	cls
+	echo +子菜单（%1）
+	echo     -(1) 第一阶段
+	echo     -(2) 第二阶段
+	echo     -(3) 第三阶段
+	echo     -(4) 上层菜单
+
+	choice -cs -n -c 1234 -m "select:"
+
+	if %errorlevel% == 4 (
+	
+		call :main_menu
+		
+	) else (
+	
+		if %errorlevel% == 1 (
+		
+			call :key_value [%main_key%] %sub_key_act_part% 1 1
+			
+		) else if %errorlevel% == 2 (
+		
+			call :key_value [%main_key%] %sub_key_act_part% 2 1
+		
+		) else if %errorlevel% == 3 (
+		
+			call :key_value [%main_key%] %sub_key_act_part% 3 1
+		
+		)
+
+		call :sub_menu %1
+
+		)
+	
+	exit /b %errorlevel%
 
 :version
 	echo Windows Registry Editor Version 5.00 > tmp.reg
 	
-	exit /b 0
+	exit /b %errorlevel%
 
-:sf
+REM %1 main key %2 sub key %3 value %4 default value
+:key_value
 	call :version
 	
 	echo. >> tmp.reg
 	
-	echo [HKEY_CURRENT_USER\uitest] >> tmp.reg
+	echo %1 >> tmp.reg
 	
-	echo "" = "1" >> tmp.reg
-	echo "type" = "1" >> tmp.reg
+	echo "" = "%4" >> tmp.reg
+	echo "%2" = "%3" >> tmp.reg
 	
 	regedit /s tmp.reg
 	
-	exit /b 0
+	exit /b %errorlevel%
 
-:vd
-	call :version
-	
-	echo. >> tmp.reg
-	
-	echo [HKEY_CURRENT_USER\uitest] >> tmp.reg
-	
-	echo "" = "2" >> tmp.reg
-	echo "type" = "2" >> tmp.reg
-	
-	regedit /s tmp.reg
-	
-	exit /b 0
-
-:part1
-	call :version
-	
-	echo. >> tmp.reg
-	
-	echo [HKEY_CURRENT_USER\uitest] >> tmp.reg
-	
-	echo "" = "1" >> tmp.reg
-	echo "partion" = "1" >> tmp.reg
-	
-	regedit /s tmp.reg
-	
-	exit /b 0
-
-:part2
-	call :version
-	
-	echo. >> tmp.reg
-	
-	echo [HKEY_CURRENT_USER\uitest] >> tmp.reg
-	
-	echo "" = "2" >> tmp.reg
-	echo "partion" = "2" >> tmp.reg
-	
-	regedit /s tmp.reg
-	
-	exit /b 0
-
-:part3
-	call :version
-	
-	echo. >> tmp.reg
-	
-	echo [HKEY_CURRENT_USER\uitest] >> tmp.reg
-	
-	echo "" = "3" >> tmp.reg
-	echo "partion" = "3" >> tmp.reg
-	
-	regedit /s tmp.reg
-	
-	exit /b 0
-	
+REM %1 main key
 :cleanup
 	call :version
 	
 	echo. >> tmp.reg
 	
-	echo [-HKEY_CURRENT_USER\uitest] >> tmp.reg
+	echo %1 >> tmp.reg
 	
-	regedit /s tmp.reg
-	del tmp.reg
+	regedit /s tmp.reg && del tmp.reg
 	
-	exit /b 0
+	exit /b %errorlevel%
