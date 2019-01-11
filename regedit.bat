@@ -25,14 +25,14 @@ set sk_act_part=act_part
 
 	choice -cs -n -c 123 -m "select:"
 	
+	call :key_value [%mkey%] %sk_act_type% %errorlevel% 1
+	
 	if %errorlevel% == 1 (
 	
-		call :key_value [%mkey%] %sk_act_type% %errorlevel% 1
 		call :smenu %sf%
 		
 	) else if %errorlevel% == 2 (
 	
-		call :key_value [%mkey%] %sk_act_type% %errorlevel% 1
 		call :smenu %vd%
 	)
 	
@@ -54,23 +54,10 @@ set sk_act_part=act_part
 		
 	) else (
 	
-		if %errorlevel% == 1 (
-		
-			call :key_value [%mkey%] %sk_act_part% %errorlevel% 1
-			
-		) else if %errorlevel% == 2 (
-		
-			call :key_value [%mkey%] %sk_act_part% %errorlevel% 1
-		
-		) else if %errorlevel% == 3 (
-		
-			call :key_value [%mkey%] %sk_act_part% %errorlevel% 1
-		
-		)
+		call :key_value [%mkey%] %sk_act_part% %errorlevel% 1
 
 		call :smenu %1
-
-		)
+	)
 	
 	exit /b %errorlevel%
 
@@ -82,8 +69,6 @@ set sk_act_part=act_part
 REM %1 main key %2 sub key %3 value %4 default value
 :key_value
 	call :version
-	
-	echo. >> tmp.reg
 	
 	echo %1 >> tmp.reg
 	
@@ -97,8 +82,6 @@ REM %1 main key %2 sub key %3 value %4 default value
 REM %1 main key
 :cleanup
 	call :version
-	
-	echo. >> tmp.reg
 	
 	echo %1 >> tmp.reg
 	
