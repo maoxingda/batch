@@ -27,12 +27,12 @@ set sk_act_part=act_part
 	
 	if %errorlevel% == 1 (
 	
-		call :key_value [%mkey%] %sk_act_type% 1 1
+		call :key_value [%mkey%] %sk_act_type% %errorlevel% 1
 		call :smenu %sf%
 		
 	) else if %errorlevel% == 2 (
 	
-		call :key_value [%mkey%] %sk_act_type% 2 1
+		call :key_value [%mkey%] %sk_act_type% %errorlevel% 1
 		call :smenu %vd%
 	)
 	
@@ -56,15 +56,15 @@ set sk_act_part=act_part
 	
 		if %errorlevel% == 1 (
 		
-			call :key_value [%mkey%] %sk_act_part% 1 1
+			call :key_value [%mkey%] %sk_act_part% %errorlevel% 1
 			
 		) else if %errorlevel% == 2 (
 		
-			call :key_value [%mkey%] %sk_act_part% 2 1
+			call :key_value [%mkey%] %sk_act_part% %errorlevel% 1
 		
 		) else if %errorlevel% == 3 (
 		
-			call :key_value [%mkey%] %sk_act_part% 3 1
+			call :key_value [%mkey%] %sk_act_part% %errorlevel% 1
 		
 		)
 
