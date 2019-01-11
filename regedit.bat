@@ -10,13 +10,13 @@ REM 活动阶段
 set sk_act_part=act_part
 
 :main
-	call :main_menu
+	call :mmenu
 	
 	call :cleanup [-%mkey%]
 	
 	goto :eof
 
-:main_menu
+:mmenu
 	cls
 	echo +主菜单
 	echo     -(1) %sf%
@@ -28,17 +28,17 @@ set sk_act_part=act_part
 	if %errorlevel% == 1 (
 	
 		call :key_value [%mkey%] %sk_act_type% 1 1
-		call :sub_menu %sf%
+		call :smenu %sf%
 		
 	) else if %errorlevel% == 2 (
 	
 		call :key_value [%mkey%] %sk_act_type% 2 1
-		call :sub_menu %vd%
+		call :smenu %vd%
 	)
 	
 	exit /b %errorlevel%
 	
-:sub_menu
+:smenu
 	cls
 	echo +子菜单（%1）
 	echo     -(1) 第一阶段
@@ -50,7 +50,7 @@ set sk_act_part=act_part
 
 	if %errorlevel% == 4 (
 	
-		call :main_menu
+		call :mmenu
 		
 	) else (
 	
@@ -68,7 +68,7 @@ set sk_act_part=act_part
 		
 		)
 
-		call :sub_menu %1
+		call :smenu %1
 
 		)
 	
