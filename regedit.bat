@@ -3,16 +3,16 @@
 
 set sf=春节活动
 set vd=情人节活动
-set main_key=HKEY_CURRENT_USER\uitest
+set mkey=HKEY_CURRENT_USER\uitest
 REM 活动类型
-set sub_key_act_type=act_type
+set sk_act_type=act_type
 REM 活动阶段
-set sub_key_act_part=act_part
+set sk_act_part=act_part
 
 :main
 	call :main_menu
 	
-	call :cleanup [-%main_key%]
+	call :cleanup [-%mkey%]
 	
 	goto :eof
 
@@ -27,12 +27,12 @@ set sub_key_act_part=act_part
 	
 	if %errorlevel% == 1 (
 	
-		call :key_value [%main_key%] %sub_key_act_type% 1 1
+		call :key_value [%mkey%] %sk_act_type% 1 1
 		call :sub_menu %sf%
 		
 	) else if %errorlevel% == 2 (
 	
-		call :key_value [%main_key%] %sub_key_act_type% 2 1
+		call :key_value [%mkey%] %sk_act_type% 2 1
 		call :sub_menu %vd%
 	)
 	
@@ -56,15 +56,15 @@ set sub_key_act_part=act_part
 	
 		if %errorlevel% == 1 (
 		
-			call :key_value [%main_key%] %sub_key_act_part% 1 1
+			call :key_value [%mkey%] %sk_act_part% 1 1
 			
 		) else if %errorlevel% == 2 (
 		
-			call :key_value [%main_key%] %sub_key_act_part% 2 1
+			call :key_value [%mkey%] %sk_act_part% 2 1
 		
 		) else if %errorlevel% == 3 (
 		
-			call :key_value [%main_key%] %sub_key_act_part% 3 1
+			call :key_value [%mkey%] %sk_act_part% 3 1
 		
 		)
 
