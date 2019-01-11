@@ -8,6 +8,10 @@ REM 活动类型
 set sk_act_type=act_type
 REM 活动阶段
 set sk_act_part=act_part
+REM 主菜单选择
+set msel=0
+REM 子菜单选择
+set ssel=0
 
 :main
 	call :mmenu
@@ -25,13 +29,15 @@ set sk_act_part=act_part
 
 	choice -cs -n -c 123 -m "select:"
 	
-	call :key_value [%mkey%] %sk_act_type% %errorlevel% 1
+	set msel=%errorlevel%
 	
-	if %errorlevel% == 1 (
+	call :key_value [%mkey%] %sk_act_type% %msel% 1
+	
+	if %msel% == 1 (
 	
 		call :smenu %sf%
 		
-	) else if %errorlevel% == 2 (
+	) else if %msel% == 2 (
 	
 		call :smenu %vd%
 	)
@@ -47,14 +53,16 @@ set sk_act_part=act_part
 	echo     -(4) 上层菜单
 
 	choice -cs -n -c 1234 -m "select:"
+	
+	set ssel=%errorlevel%
 
-	if %errorlevel% == 4 (
+	if %ssel% == 4 (
 	
 		call :mmenu
 		
 	) else (
 	
-		call :key_value [%mkey%] %sk_act_part% %errorlevel% 1
+		call :key_value [%mkey%] %sk_act_part% %ssel% 1
 
 		call :smenu %1
 	)
