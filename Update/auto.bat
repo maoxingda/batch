@@ -21,6 +21,7 @@
 		
 	) else if "%1" == "svn" (
 
+		pushd %~dp0 && echo begin...>update.log
 		pushd %~dp0.. && svn cleanup && svn update
 	)
 	
@@ -29,6 +30,7 @@
 	goto :eof
 
 :usage
+	echo.
 	echo usage: auto [arguments]
 	echo.
 	echo     [start]        install ./service.exe as QXiuUpdate service and start it;
