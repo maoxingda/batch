@@ -35,8 +35,7 @@ namespace QXiuUpdate
             {
                 try
                 {
-                    int updateInterval = 30*1000;
-                    File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + "maoxd.log", "2begin...");
+                    int updateInterval = 30 * 1000;
                     Process proc = null;
                     string curPath = AppDomain.CurrentDomain.BaseDirectory;
                     proc = new Process();
@@ -44,7 +43,6 @@ namespace QXiuUpdate
                     XmlDocument doc = new XmlDocument();
                     doc.Load(AppDomain.CurrentDomain.BaseDirectory + "config.xml");
                     XmlNodeList nls = doc.DocumentElement.ChildNodes;
-                    File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + "maoxd.log", "3begin...");
                     foreach (XmlElement element in nls)
                     {
                         if ("batch" == element.Name)
@@ -67,7 +65,7 @@ namespace QXiuUpdate
                 }
                 catch (Exception)
                 {
-                    File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + "maoxd.log", "1begin...");
+                    File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + "update.log", "exception...");
                     throw;
                 }
             }

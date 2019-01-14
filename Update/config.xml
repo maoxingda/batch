@@ -2,6 +2,5 @@
 <QXiuUpdate>
 	<batch>auto.bat</batch>
 	<arguments>svn</arguments>
-	<!-- 单位：毫秒 -->
 	<updateInterval>30000</updateInterval>
 </QXiuUpdate>
