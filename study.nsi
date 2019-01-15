@@ -9,4 +9,5 @@ FunctionEnd
 
 Section
 	DetailPrint 2019/01/12
+	DetailPrint 2019/01/12
 SectionEnd
