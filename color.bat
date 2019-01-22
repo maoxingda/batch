@@ -1,5 +1,5 @@
 ::-------------Welcome to www.bathome.net---------------
-@mode con cols=56 lines=12 & @title 献词一首 by Broly
+REM @mode con cols=56 lines=12 & @title 献词一首 by Broly
 @echo off&setlocal enabledelayedexpansion
 set m=0
 set str=2367abcdef
