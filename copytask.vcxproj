@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<OutPath>.\aPath\</OutPath>
+	</PropertyGroup>
+	
+	<Target Name="t1">
+		<!-- <MakeDir -->
+			<!-- Directories="$(OutPath)" -->
+		<!-- /> -->
+		<Message Text="t1"></Message>
+	</Target>
+	
+	<Target Name="t2">
+		<!-- <MakeDir -->
+			<!-- Directories="$(OutPath)" -->
+		<!-- /> -->
+		<Message Text="t2"></Message>
+	</Target>
+</Project>
